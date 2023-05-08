@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const app = express();
-app.use(express, json());
+app.use(express.json());
 
 const dbPath = path.join(__dirname, "twitterClone.db");
 let db = null;
@@ -133,7 +133,7 @@ app.post("/login/", async (request, response) => {
 
 //api-3
 
-app.get("/users/tweets/feed/", authentication, async (request, response) => {
+app.get("/user/tweets/feed/", authentication, async (request, response) => {
   const { username } = request;
 
   const followingPeopleIds = await getFollowingPeopleIdsOfUser(username);
@@ -232,7 +232,7 @@ app.get(
 
 //api-9
 
-app.get("/users/tweets/", authentication, async (request, response) => {
+app.get("/user/tweets/", authentication, async (request, response) => {
   const { userId } = request;
   const getTweetsQuery = `
     SELECT tweet,
@@ -250,7 +250,7 @@ app.get("/users/tweets/", authentication, async (request, response) => {
 
 //api-10
 
-app.post("/users/tweets/", authentication, async (request, response) => {
+app.post("/user/tweets/", authentication, async (request, response) => {
   const { tweet } = request.body;
   const userId = parseInt(request.userId);
   const dateTime = new Date().toJSON().substring(0, 19).replace("T", " ");
